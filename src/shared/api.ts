@@ -18,7 +18,7 @@ export interface Context {
   organization: Organization;
 }
 
-export type BatchOperationCallback = (object: any) => Promise<void>;
+export type BatchOperationCallback = (object: any) => Promise<any>;
 
 export type ChangesetOperationCallback = (changeset: Changeset) => Promise<void>;
 

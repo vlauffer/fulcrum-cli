@@ -55,7 +55,7 @@ function environmentFromEnvironmentVariables(): ExpressionEnvironment {
 
 export async function updateCalculationsRecursive(
   record: Record,
-  feature: Feature,
+  feature: Record | RepeatableItemValue,
   formValues: FormValues,
   context: Context,
 ) {
@@ -147,7 +147,7 @@ const DEFAULT_ENVIRONMENT: ExpressionEnvironment = {
 
 function getFeatureVariables(
   record: Record,
-  feature: Feature,
+  feature: Record | RepeatableItemValue,
   formValues: FormValues,
   context: Context,
   environment: ExpressionEnvironment,
@@ -182,8 +182,8 @@ function getFeatureVariables(
     recordGeometry: record.geometryAsGeoJSON,
 
     recordAltitude: record.altitude,
-    recordVerticalAccuracy: record.recordVerticalAccuracy,
-    recordHorizontalAccuracy: record.recordHorizontalAccuracy,
+    recordVerticalAccuracy: record.verticalAccuracy,
+    recordHorizontalAccuracy: record.horizontalAccuracy,
 
     recordCreatedLatitude: record.createdLatitude,
     recordCreatedLongitude: record.createdLongitude,
@@ -200,7 +200,8 @@ function getFeatureVariables(
     recordEditedDuration: record.editedDuration,
 
     featureID: feature.id,
-    featureIndex: feature.index,
+    // @ts-ignore
+    featureIndex: repeatable ? feature.index : null,
     featureIsNew: feature.id == null,
     featureCreatedAt: DateUtils.formatEpochTimestamp(feature.createdAt),
     featureUpdatedAt: DateUtils.formatEpochTimestamp(feature.updatedAt),
